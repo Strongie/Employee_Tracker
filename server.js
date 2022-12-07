@@ -48,20 +48,20 @@ function init(){
             view_roles();
           break;
           case 'add a new role':
-            new_role();
+            new_roles();
           break;
           case 'view all employees':
-            manager()
+            view_employees();
           break;
           case 'edit a current employee':
-            engineer()  
+            edit_employees();  
           break;
           case 'view employees by their manager':
-            intern()
+            employee_manager();
           break;
           case 'view an employee by department':
+            employee_department();
           default:
-            renderHTML()
             console.log("Choice Made");
     
         }
@@ -70,28 +70,69 @@ function init(){
 function view_departments(){
     db.query('SELECT * FROM department', (err, result)=>{
         if(err) throw err;
-    return(result);
+    console.table(result);
     employee_questions();    
 
 });
+}
 
 function new_departments(){
     db.query('SELECT * FROM department', (err, result)=>{
         if(err) throw err;
-    return(result);
+        console.table(result);
     employee_questions();    
 });
+}
 
 function view_roles(){
-    db.query('SELECT * FROM department', (err, result)=>{
+    db.query('SELECT * FROM role', (err, result)=>{
         if(err) throw err;
-    return(result);
+        console.table(result);
     employee_questions();    
 
 });
-
-
 }
 
+function new_roles(){
+    db.query('SELECT * FROM department', (err, result)=>{
+        if(err) throw err;
+        console.table(result);
+    employee_questions();    
+
+});
 }
+
+function view_employees(){
+    db.query('SELECT * FROM department', (err, result)=>{
+        if(err) throw err;
+        console.table(result);
+    employee_questions();    
+});
+}
+
+function edit_employees(){
+    db.query('SELECT * FROM department', (err, result)=>{
+        if(err) throw err;
+        console.table(result);
+    employee_questions();    
+});
+}
+
+function employee_manager(){
+    db.query('SELECT * FROM department', (err, result)=>{
+        if(err) throw err;
+        console.table(result);
+    employee_questions();    
+});
+}
+
+function employee_department(){
+    db.query('SELECT * FROM department', (err, result)=>{
+        if(err) throw err;
+        console.table(result);
+    employee_questions();    
+});
+}
+}
+
 init()
