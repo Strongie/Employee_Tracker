@@ -61,18 +61,19 @@ function init(){
           break;
           case 'view an employee by department':
             employee_department();
-          default:
-            log_out();
-            console.log("Finished");
+        //   default:
+        //     // log_out();
+        //     console.log("Finished");
     
         }
       });
         
 function view_departments(){
-    db.query('SELECT * FROM departments', (err, result)=>{
+    const sqlQuery = 'SELECT * FROM departments'
+    db.query(sqlQuery, (err, result)=>{
         if(err) throw err;
-        console.log('Viewing all departments');
-    console.table(result);
+        console.table(result);
+    // console.table(result);
     employee_questions();    
 
 });
@@ -138,11 +139,11 @@ function employee_department(){
 });
 }
 
-function log_out(){
-    db.end();
-    console.log("Finished");
+// function log_out(){
+//     db.end();
+//     console.log("Finished");
 
-}
+// }
 
 
 }
