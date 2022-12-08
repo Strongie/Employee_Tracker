@@ -1,7 +1,8 @@
-const express = require('express');
+// const express = require('express');
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
 const mysql2 = require('mysql2');
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -28,7 +29,7 @@ function init(){
 }
 
     function employee_questions(){
-        inquirer.prompt([
+        return inquirer.prompt([
           {
             type: "list",
             name: 'prompt',
@@ -39,28 +40,28 @@ function init(){
       .then((data) => {
         switch(data.choice){
           case 'view all departments':
-            view_departments();
-          break;
+          return  view_departments();
+          
           case 'add a new department':
-            new_departments() 
-          break;
+          return new_departments() 
+          
           case 'view all roles':
-            view_roles();
-          break;
+          return view_roles();
+         
           case 'add a new role':
-            new_roles();
-          break;
+          return new_roles();
+          
           case 'view all employees':
-            view_employees();
-          break;
+          return view_employees();
+          
           case 'edit a current employee':
-            edit_employees();  
-          break;
+          return edit_employees();  
+          
           case 'view employees by their manager':
-            employee_manager();
-          break;
+          return employee_manager();
+          
           case 'view an employee by department':
-            employee_department();
+          return employee_department();
         //   default:
         //     // log_out();
         //     console.log("Finished");
@@ -69,21 +70,19 @@ function init(){
       });
         
 function view_departments(){
-    const sqlQuery = 'SELECT * FROM departments'
-    db.query(sqlQuery, (err, result)=>{
-        if(err) throw err;
-        console.table(result);
-    // console.table(result);
-    employee_questions();    
+    const sqlQuery = 'SELECT * FROM departments';
+    db.query(sqlQuery, (err, rows) => {
+     console.table(rows);
+      employee_questions();    
 
 });
 }
 
 function new_departments(){
-    db.query('SELECT * FROM department', (err, result)=>{
-        if(err) throw err;
-        console.table(result);
-    employee_questions();    
+    const sqlQuery = 'SELECT * FROM departments';
+    db.query(sqlQuery, (err, rows) => {
+      console.table(rows);
+      employee_questions();    
 });
 }
 
