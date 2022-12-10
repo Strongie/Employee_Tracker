@@ -87,13 +87,13 @@ function new_departments(){
      ])
      .then(data => {
         const sqlQuery = `INSERT INTO departments (dept_name) VALUES (?)`;        
-
-    } 
-    db.query(sqlQuery, (err, rows) => {
-      console.log('New Department Added');
-      employee_questions();    
+        const inputData = [data.department_name];
+        db.query(sqlQuery, inputData, (err, rows) => {
+            console.log('New Department Added');
+            employee_questions();     
+    
 })
-}
+})
 
 function view_roles(){
     db.query('SELECT * FROM roles', (err, result)=>{
