@@ -1,6 +1,6 @@
 // const express = require('express');
 const inquirer = require('inquirer');
-const consoleTable = require('console.table');
+const cTable = require('console.table');
 const mysql2 = require('mysql2');
 
 
@@ -38,7 +38,7 @@ function init(){
           }
       ])
       .then((data) => {
-        switch(data.choice){
+        switch(data.prompt){
           case 'view all departments':
           return  view_departments();
           
@@ -79,11 +79,20 @@ function view_departments(){
 }
 
 function new_departments(){
-    const sqlQuery = 'SELECT * FROM departments';
+    return inquirer.prompt ([
+        {
+            name: 'department_name',
+            message: 'please enter the department name',
+        }
+     ])
+     .then(data => {
+        const sqlQuery = `INSERT INTO departments (dept_name) VALUES (?)`;        
+
+    } 
     db.query(sqlQuery, (err, rows) => {
-      console.table(rows);
+      console.log('New Department Added');
       employee_questions();    
-});
+})
 }
 
 function view_roles(){
