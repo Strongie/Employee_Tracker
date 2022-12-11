@@ -1,4 +1,4 @@
-// const express = require('express');
+const express = require('express');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const mysql2 = require('mysql2');
@@ -90,14 +90,14 @@ function new_departments(){
         const inputData = [data.department_name];
         db.query(sqlQuery, inputData, (err, rows) => {
             console.log('New Department Added');
+            console.table(rows);
             employee_questions();     
-    
 })
 })
-
+}
 function view_roles(){
-    db.query('SELECT * FROM roles', (err, result)=>{
-        if(err) throw err;
+    const sqlQuery = 'SELECT * FROM roles'
+    db.query(sqlQuery, (err, result)=>{
         console.log('Viewing all roles');
         console.table(result);
     employee_questions();    
@@ -107,17 +107,41 @@ function view_roles(){
 
 function new_roles(){
     db.query('SELECT * FROM department', (err, result)=>{
-        if(err) throw err;
-        console.table(result);
-    employee_questions();    
+        return inquirer.prompt ([
+            {
+                name: 'title',
+                message: 'please enter the role',
+            },
+
+            {
+                name: 'salary',
+                message: 'please enter the salary',
+            },
+            {
+                type: 'list',
+                name: 'prompt',
+                message: 'please enter the role',
+            },
+
+
+        ])
+        .then(data => {
+            const sqlQuery = `INSERT INTO roles (tilte. salary, department_id) VALUES (?,?,?)`;        
+            const inputData = [data.title, data.salary, data.department_id];
+            db.query(sqlQuery, inputData, (err, rows) => {
+                console.log('New Department Added');
+                console.table(rows);
+                employee_questions();     
+        
+    })
+    })
 
 });
 }
 
 function view_employees(){
     db.query('SELECT * FROM employees', (err, result)=>{
-        if(err) throw err;
-        console.log('Viewing all employees');
+       console.log('Viewing all employees');
         console.table(result);
     employee_questions();    
 });
@@ -125,7 +149,7 @@ function view_employees(){
 
 function edit_employees(){
     db.query('SELECT * FROM department', (err, result)=>{
-        if(err) throw err;
+        
         console.table(result);
     employee_questions();    
 });
@@ -133,7 +157,7 @@ function edit_employees(){
 
 function employee_manager(){
     db.query('SELECT * FROM department', (err, result)=>{
-        if(err) throw err;
+        
         console.table(result);
     employee_questions();    
 });
@@ -141,7 +165,7 @@ function employee_manager(){
 
 function employee_department(){
     db.query('SELECT * FROM department', (err, result)=>{
-        if(err) throw err;
+        
         console.table(result);
     employee_questions();    
 });
