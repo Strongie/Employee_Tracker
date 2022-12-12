@@ -53,6 +53,9 @@ function init(){
           
           case 'view all employees':
           return view_employees();
+
+          case 'add a new employee':
+          return new_employee();
           
           case 'edit a current employee':
           return edit_employees();  
@@ -140,6 +143,18 @@ function new_roles(){
 }
 
 function view_employees(){
+    db.query('SELECT * FROM employees', (err, result)=>{
+       console.log('Viewing all employees');
+        console.table(result);
+    employee_questions();    
+});
+}
+
+function new_employees(){
+    const sqlQuery = `SELECT * FROM employees`;
+    const sqlQuery2 = `SELECT * FROM roles`; 
+
+
     db.query('SELECT * FROM employees', (err, result)=>{
        console.log('Viewing all employees');
         console.table(result);
