@@ -167,7 +167,7 @@ function new_employees(){
     employee_questions();    
 });
 
-return.inquirer.prompt ([
+return inquirer.prompt ([
     {
         name: 'first_name',
         message: 'What is the employees first name?',        
@@ -198,40 +198,65 @@ return.inquirer.prompt ([
     
 })
 })
-
-
-])
-
 }
-
 }
 
 function edit_employees(){
     const sqlQuery = `SELECT * FROM employees`;
-    const sqlQuery2 = `SELECT * FROM roles`; 
+    const sqlQuery2 = `SELECT * FROM roles`;
+    
+    db.query(sqlQuery, (err, result)=>{
+        console.log(result);
+    });
+    db.query(sqlQuery2, (err, result)=>{
+        console.log(result);
+});
 
-    db.query('SELECT * FROM department', (err, result)=>{
-        
-        console.table(result);
+return inquirer.prompt([
+    {
+        type: 'list',
+        name: 'employee',
+        message: 'Which employee would you like to edit?',
+        choices: ['Computer Engineer', 'Office Administrator', 'Salesperson', 'Intern']
+
+
+    },
+    {
+        type: 'list',
+        name: 'role_id',
+        message: 'Please select the employees new role',
+        choices: ['Computer Engineer', 'Office Administrator', 'Salesperson', 'Intern']
+    },
+])
+
+.then(data => {
+    const sql = `UPDATE employees SET role_id = ? WHERE id = ?`;        
+    const inputData = [data.role_id, data.employee];
+    db.query(sql, inputData, (err, rows) => {
+        console.log('Employee Edited');
+        console.table(rows);
+        employee_questions();     
+
+});
+})
+}
+
+function employee_manager(){
+    const sql = `SELECT * FROM employees JOIN roles ON employees.role_id = roles.id ORDER BY manager_id ASC`;
+    db.query(sql, (err, result)=>{
+    console.table(result);
     employee_questions();    
 });
 }
 
-// function employee_manager(){
-//     db.query('SELECT * FROM department', (err, result)=>{
+function employee_department(){
+    const sql = `SELECT * FROM employees JOIN roles ON employees.role_id = roles.id ORDER BY title ASC`;
+    db.query(sql, (err, result)=>{
         
-//         console.table(result);
-//     employee_questions();    
-// });
-// }
-
-// function employee_department(){
-//     db.query('SELECT * FROM department', (err, result)=>{
-        
-//         console.table(result);
-//     employee_questions();    
-// });
-// }
+    console.table(result);
+    employee_questions();    
+});
+}
 
 // function log_out(){
 //     db.end();
