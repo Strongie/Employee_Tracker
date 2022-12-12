@@ -1,8 +1,22 @@
 # Employee Tracker
 
-## Project
+## Table of Conents
+
+- [Project Description](#project-description)
+- [Links](#links)
+- [User Story](#user-story)
+- [Acceptance Criteria](#acceptance-criteria)
+- [Credits](#credits)
+- [License](#license)
+
+## Project Description
 
  To build a command-line application from scratch to manage a company's employee database, using Node.js, Inquirer, and MySQL.
+
+## Links
+
+- Github: https://github.com/Strongie/Employee_Tracker
+- Video: 
 
  ## User Story
 
@@ -29,3 +43,11 @@ WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database
+
+## Credit
+
+AskBCS learning assistants for a lot of patience.
+
+## License
+
+This file was created by Nick Strong as a project for the Sydney University Coding Bootcamp and Trilogy Education Services.
