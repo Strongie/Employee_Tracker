@@ -34,7 +34,7 @@ function init(){
             type: "list",
             name: 'prompt',
             message: 'what would you like to do?',
-            choices: ['view all departments', 'add a new department', 'view all roles', 'add a new role', 'view all employees', 'edit a current employee', 'view employees by their manager', 'view an employee by department', 'Log Out']
+            choices: ['view all departments', 'add a new department', 'view all roles', 'add a new role', 'view all employees', 'edit a current employee', 'view employees by their manager', 'view an employee by department']
           }
       ])
       .then((data) => {
@@ -109,7 +109,13 @@ function view_roles(){
 }
 
 function new_roles(){
-    db.query('SELECT * FROM department', (err, result)=>{
+    const sqlQuery = 'SELECT * FROM department';
+    db.query(sqlQuery, (err, result)=>{
+        let departments = result;
+        const chosenDeparment = departments.map(({id, dept_name}) => ({
+            dept_name: dept_name,
+            value: id
+        }));
         return inquirer.prompt ([
             {
                 name: 'title',
@@ -124,6 +130,7 @@ function new_roles(){
                 type: 'list',
                 name: 'prompt',
                 message: 'please enter the role',
+                choices: chosenDeparment
             },
 
 
@@ -185,7 +192,8 @@ return inquirer.prompt ([
         Type: 'list',
         name: 'manager_id',
         message: 'Please select the employees manager',        
-    })
+    },
+])
 
     .then(data => {
         const sql = `INSERT INTO employees (first_name, last_name, manager_id, role_id)
@@ -265,6 +273,6 @@ function employee_department(){
 // }
 
 
-}
+
 
 init()
